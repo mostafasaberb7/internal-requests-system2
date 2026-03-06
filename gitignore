@@ -1,0 +1,13 @@
+# ── بيانات حساسة – لا ترفعها على GitHub أبداً ──
+.streamlit/secrets.toml
+
+# ── ملف البيانات المحلي ──
+requests.xlsx
+
+# ── Python ──
+__pycache__/
+*.pyc
+*.pyo
+.env
+venv/
+.venv/
