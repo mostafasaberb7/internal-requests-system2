@@ -123,22 +123,10 @@ EMAIL_PASSWORD = st.secrets.get("EMAIL_PASSWORD", "")
 # password = "hashed_password"
 # role = "agent"
 def _load_users():
-    try:
-        raw = st.secrets["users"]
-        return {name: dict(info) for name, info in raw.items()}
-    except Exception:
-        # fallback للتشغيل المحلي بدون secrets
-        return {
-            "أحمد علي":       {"password": h("1234"),   "role": "agent"},
-            "سارة محمد":      {"password": h("1234"),   "role": "agent"},
-            "عمر خالد":       {"password": h("1234"),   "role": "agent"},
-            "محمد سعيد":      {"password": h("1234"),   "role": "agent"},
-            "علي الصيانة":    {"password": h("maint1"), "role": "maintenance_supervisor"},
-            "سامي الصيانة":   {"password": h("maint2"), "role": "maintenance_supervisor"},
-            "خالد إبراهيم":   {"password": h("sup1"),   "role": "supervisor"},
-            "منى حسن":        {"password": h("sup2"),   "role": "supervisor"},
-            "عبدالله الأمير": {"password": h("mgr1"),   "role": "manager"},
-        }
+    if "users" not in st.secrets:
+        st.error("⚠️ ملف الإعدادات (secrets.toml) غير موجود أو غير مكتمل. تواصل مع مسؤول النظام.")
+        st.stop()
+    return {name: dict(info) for name, info in st.secrets["users"].items()}
 
 USERS = _load_users()
 
